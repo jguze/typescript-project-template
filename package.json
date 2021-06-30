@@ -2,12 +2,17 @@
   "name": "typescript-template",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/index.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "files": [
     "dist"
   ],
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "tsc:build": "tsc",
+    "tsc:check": "tsc --emitDeclarationOnly",
+    "build": "npm run tsc:check & node --experimental-json-modules esbuild.config.mjs",
+    "build:watch": "npm run build -- --watch",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -16,9 +21,15 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
+    "concurrently": "^6.2.0",
+    "esbuild": "^0.12.12",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
+    "minimist": "^1.2.5",
     "prettier": "^2.3.2",
     "typescript": "^4.3.4"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
